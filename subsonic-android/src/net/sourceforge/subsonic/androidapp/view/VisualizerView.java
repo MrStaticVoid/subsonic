@@ -20,11 +20,10 @@ package net.sourceforge.subsonic.androidapp.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.audiofx.Visualizer;
-import android.util.AttributeSet;
 import android.view.View;
+import net.sourceforge.subsonic.androidapp.R;
 import net.sourceforge.subsonic.androidapp.audiofx.VisualizerController;
 import net.sourceforge.subsonic.androidapp.domain.PlayerState;
 import net.sourceforge.subsonic.androidapp.service.DownloadService;
@@ -35,7 +34,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
  * {@link Visualizer.OnDataCaptureListener#onWaveFormDataCapture}
  *
  * @author Sindre Mehus
- * @version $Id: VisualizerView.java 2333 2011-07-13 06:39:38Z sindre_mehus $
+ * @version $Id: VisualizerView.java 3207 2012-10-04 21:01:06Z sindre_mehus $
  */
 public class VisualizerView extends View {
 
@@ -49,10 +48,12 @@ public class VisualizerView extends View {
 
     public VisualizerView(Context context) {
         super(context);
+        setVisibility(GONE);
+        setBackgroundColor(context.getResources().getColor(R.color.overlayColor));
 
-        paint.setStrokeWidth(2f);
+        paint.setStrokeWidth(5f);
         paint.setAntiAlias(true);
-        paint.setColor(Color.rgb(129, 201, 54));
+        paint.setColor(context.getResources().getColor(R.color.dividerColor));
     }
 
     public boolean isActive() {
@@ -81,6 +82,8 @@ public class VisualizerView extends View {
         } else {
             visualizer.setDataCaptureListener(null, captureRate, false, false);
         }
+
+        setVisibility(active ? VISIBLE : GONE);
 
         visualizer.setEnabled(active);
         invalidate();
