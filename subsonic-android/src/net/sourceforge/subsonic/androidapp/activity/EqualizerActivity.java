@@ -28,7 +28,6 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -41,7 +40,7 @@ import net.sourceforge.subsonic.androidapp.service.DownloadServiceImpl;
  * Equalizer controls.
  *
  * @author Sindre Mehus
- * @version $Id: EqualizerActivity.java 2340 2011-07-15 21:12:22Z sindre_mehus $
+ * @version $Id: EqualizerActivity.java 3188 2012-10-02 18:57:56Z sindre_mehus $
  */
 public class EqualizerActivity extends Activity {
 
@@ -69,7 +68,7 @@ public class EqualizerActivity extends Activity {
             }
         });
 
-        CheckBox enabledCheckBox = (CheckBox) findViewById(R.id.equalizer_enabled);
+        CompoundButton enabledCheckBox = (CompoundButton) findViewById(R.id.equalizer_enabled);
         enabledCheckBox.setChecked(equalizer.getEnabled());
         enabledCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -83,6 +82,12 @@ public class EqualizerActivity extends Activity {
     protected void onPause() {
         super.onPause();
         equalizerController.saveSettings();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateBars();
     }
 
     @Override
